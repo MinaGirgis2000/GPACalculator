@@ -7,8 +7,8 @@ import java.awt.event.*;
 
 public class Calc extends JFrame implements ActionListener {
 
-    JPanel panel1, classpanel, panel2;
-    double c1, c2, c3, c4, c5, c6, c7, c8, g1, g2, g3, g4, g5, g6, g7, g8, gpa, pgpa, pcredits, totalcredits;
+    JPanel panel1, classpanel, panel2, panel3;
+    double c1, c2, c3, c4, c5, c6, c7, c8, g1, g2, g3, g4, g5, g6, g7, g8, gpa, pgpa, pcredits, totalcredits, gpoints;
     double[] gr = new double[8];
     double[] cr = new double[8];
     double[] gpaC = new double[8];
@@ -22,16 +22,19 @@ public class Calc extends JFrame implements ActionListener {
     JList<String> l7 = new JList<>(courses);
     JList<String> l8 = new JList<>(courses);
     String[] list = new String[8];
-    JLabel blank1, blank2, blank3, blank4, cred, grad, courseL, precred, pregpa;
+    JLabel blank1, blank2, blank3, cred, grad, courseL, precred, pregpa;
     JTextField[] credits = new JTextField[9];
     JTextField[] grades = new JTextField[9];
+    JLabel tpgpa, tgpa, tc, PrGPA, gPA, TCred;
+    JLabel[] classG = new JLabel[8];
+    JLabel[] GrL = new JLabel[8];
     JLabel[] classNum = new JLabel[9];
     JButton[] levelB = new JButton[8];
     JButton calc, back;
 
     Calc() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(530, 565);
+        this.setSize(560, 565);
         this.setLayout(null);
         this.getContentPane().setBackground(Color.WHITE);
         this.setTitle("GPA Calculator");
@@ -57,14 +60,19 @@ public class Calc extends JFrame implements ActionListener {
         blank1 = new JLabel("");
         blank2 = new JLabel("");
         blank3 = new JLabel("");
-        blank4 = new JLabel("");
-        grad = new JLabel("       Grades");
-        cred = new JLabel("       Credits");
-        courseL = new JLabel("  Course Level");
+        grad = new JLabel("              Grades");
+        cred = new JLabel("             Credits");
+        courseL = new JLabel("        Course Level");
         pregpa = new JLabel(" Pre-GPA");
         precred = new JLabel("Pre-Credits");
+        tpgpa = new JLabel("Pre-GPA: ");
+        tgpa = new JLabel("GPA: ");
+        tc = new JLabel("Total Credits: ");
+        PrGPA = new JLabel();
+        gPA = new JLabel();
+        TCred = new JLabel();
 
-        l1.setBounds(376, 79, 128, 75);
+        l1.setBounds(406, 79, 128, 75);
         l1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -73,7 +81,7 @@ public class Calc extends JFrame implements ActionListener {
                 l1.setVisible(false);
             }
         });
-        l2.setBounds(376, 119, 128, 75);
+        l2.setBounds(406, 119, 128, 75);
         l2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -82,7 +90,7 @@ public class Calc extends JFrame implements ActionListener {
                 l2.setVisible(false);
             }
         });
-        l3.setBounds(376, 159, 128, 75);
+        l3.setBounds(406, 159, 128, 75);
         l3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -91,7 +99,7 @@ public class Calc extends JFrame implements ActionListener {
                 l3.setVisible(false);
             }
         });
-        l4.setBounds(376, 199, 128, 75);
+        l4.setBounds(406, 199, 128, 75);
         l4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -100,7 +108,7 @@ public class Calc extends JFrame implements ActionListener {
                 l4.setVisible(false);
             }
         });
-        l5.setBounds(376, 239, 128, 75);
+        l5.setBounds(406, 239, 128, 75);
         l5.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -109,7 +117,7 @@ public class Calc extends JFrame implements ActionListener {
                 l5.setVisible(false);
             }
         });
-        l6.setBounds(376, 279, 128, 75);
+        l6.setBounds(406, 279, 128, 75);
         l6.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -118,7 +126,7 @@ public class Calc extends JFrame implements ActionListener {
                 l6.setVisible(false);
             }
         });
-        l7.setBounds(376, 319, 128, 75);
+        l7.setBounds(406, 319, 128, 75);
         l7.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -127,7 +135,7 @@ public class Calc extends JFrame implements ActionListener {
                 l7.setVisible(false);
             }
         });
-        l8.setBounds(376, 359, 128, 75);
+        l8.setBounds(406, 359, 128, 75);
         l8.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -138,22 +146,34 @@ public class Calc extends JFrame implements ActionListener {
         });
 
         panel1 = new JPanel();
-        panel1.setBounds(80, 5, 425, 440);
-        panel1.setBackground(Color.WHITE);
+        panel1.setBounds(110, 5, 425, 440);
         panel1.setLayout(new GridLayout(11, 3, 20, 10));
+        panel1.setBackground(Color.WHITE);
         panel1.add(grad);
         panel1.add(cred);
         panel1.add(courseL);
 
+        panel2 = new JPanel();
+        panel2.setBounds(20, 150, 200, 150);
+        panel2.setLayout(new GridLayout(3, 2, 25, 10));
+        panel2.setBackground(Color.WHITE);
+        panel2.add(tpgpa);
+        panel2.add(PrGPA);
+        panel2.add(tgpa);
+        panel2.add(gPA);
+        panel2.add(tc);
+        panel2.add(TCred);
+
+        panel3 = new JPanel();
+        panel3.setBounds(368, 10, 150, 440);
+        panel3.setBackground(Color.WHITE);
+        panel3.setLayout(new GridLayout(8, 2, 18, 10));
+
         classpanel = new JPanel();
-        classpanel.setBounds(10, 5, 50, 440);
+        classpanel.setBounds(10, 5, 80, 440);
         classpanel.setBackground(Color.WHITE);
         classpanel.setLayout(new GridLayout(11, 1, 20, 0));
         classpanel.add(blank1);
-
-        panel2 = new JPanel();
-        panel2.setBounds(15, 15, 320, 535);
-        panel2.setLayout(new GridLayout(2, 2, 20, 10));
 
         courses.addElement("Course Level");
         courses.addElement("Academic");
@@ -187,6 +207,13 @@ public class Calc extends JFrame implements ActionListener {
             });
             classNum[i] = new JLabel("Class " + String.valueOf(++i));
             --i;
+            if (i < 8) {
+                classG[i] = new JLabel("Class " + String.valueOf(++i));
+                --i;
+                GrL[i] = new JLabel();
+                panel3.add(classG[i]);
+                panel3.add(GrL[i]);
+            }
             if (i == 8) {
                 classpanel.add(blank2);
                 panel1.add(pregpa);
@@ -203,12 +230,12 @@ public class Calc extends JFrame implements ActionListener {
         classNum[8].setText("Previous-GPA");
 
         calc = new JButton("Calculate");
-        calc.setBounds(210, 470, 100, 25);
+        calc.setBounds(230, 470, 100, 25);
         calc.addActionListener(this);
         calc.setFocusable(false);
 
         back = new JButton("Back");
-        back.setBounds(125, 470, 100, 25);
+        back.setBounds(230, 470, 100, 25);
         back.addActionListener(this);
         back.setFocusable(false);
 
@@ -224,9 +251,11 @@ public class Calc extends JFrame implements ActionListener {
         this.add(classpanel);
         this.add(panel1);
         this.add(panel2);
+        this.add(panel3);
         this.add(back);
         this.setVisible(true);
         panel2.setVisible(false);
+        panel3.setVisible(false);
         back.setVisible(false);
         l1.setVisible(false);
         l2.setVisible(false);
@@ -246,11 +275,17 @@ public class Calc extends JFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if (e.getSource() == calc) {
             for (int i = 0; i < 9; i++) {
-                if (credits[i].getText() == "") {
+                if (credits[i].getText().equals("")) {
                     credits[i].setText("0");
                 }
-                if (grades[i].getText() == "") {
+                if (grades[i].getText().equals("")) {
                     grades[i].setText("0");
+                }
+                if (i < 8) {
+                    list[i] = levelB[i].getText();
+                    if (list[i] == "Course Level ▽") {
+                        list[i] = "Academic ▽";
+                    }
                 }
             }
 
@@ -275,111 +310,188 @@ public class Calc extends JFrame implements ActionListener {
             pgpa = Double.parseDouble(grades[8].getText());
             pcredits = Double.parseDouble(credits[8].getText());
 
-            totalcredits = c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + pcredits;
-            gpa = (c1 * g1) + (c2 * g2) + (c3 * g3) + (c4 * g4) + (c5 * g5) +
-                    (c6 * g6) + (c7 * g7) + (c8 * g8) + (pcredits * pgpa);
-
             for (int i = 0; i < 8; i++) {
-                list[i] = levelB[i].getText();
-                if (list[i] == "Course Level ▽") {
-                    list[i] = "Academic ▽";
-                }
                 switch (list[i]) {
                     case "Academic ▽":
                         if (gr[i] <= 59.49) {
                             gpaC[i] = 0.0;
+                            GrL[i].setText("F");
                         } else if (gr[i] >= 59.5 && gr[i] <= 61.45) {
                             gpaC[i] = 0.7;
+                            GrL[i].setText("D-");
                         } else if (gr[i] >= 61.5 && gr[i] <= 65.49) {
                             gpaC[i] = 1.0;
+                            GrL[i].setText("D");
                         } else if (gr[i] >= 65.5 && gr[i] <= 69.49) {
                             gpaC[i] = 1.3;
+                            GrL[i].setText("D+");
                         } else if (gr[i] >= 69.5 && gr[i] <= 71.49) {
                             gpaC[i] = 1.7;
+                            GrL[i].setText("C-");
                         } else if (gr[i] >= 71.5 && gr[i] <= 75.49) {
                             gpaC[i] = 2.0;
+                            GrL[i].setText("C");
                         } else if (gr[i] >= 75.5 && gr[i] <= 79.49) {
                             gpaC[i] = 2.3;
+                            GrL[i].setText("C+");
                         } else if (gr[i] >= 79.5 && gr[i] <= 81.49) {
                             gpaC[i] = 2.7;
+                            GrL[i].setText("B-");
                         } else if (gr[i] >= 81.5 && gr[i] <= 85.49) {
                             gpaC[i] = 3.0;
+                            GrL[i].setText("B");
                         } else if (gr[i] >= 85.5 && gr[i] <= 89.49) {
                             gpaC[i] = 3.3;
+                            GrL[i].setText("B+");
                         } else if (gr[i] >= 89.5 && gr[i] <= 91.49) {
                             gpaC[i] = 3.7;
+                            GrL[i].setText("A-");
                         } else if (gr[i] >= 91.5 && gr[i] <= 97.49) {
                             gpaC[i] = 4.0;
+                            GrL[i].setText("A");
                         } else if (gr[i] >= 97.5) {
                             gpaC[i] = 4.3;
+                            GrL[i].setText("A+");
                         }
                         break;
                     case "Honors ▽":
                         if (gr[i] <= 59.49) {
                             gpaC[i] = 0.0;
+                            GrL[i].setText("F");
                         } else if (gr[i] >= 59.5 && gr[i] <= 61.45) {
                             gpaC[i] = 0.805;
+                            GrL[i].setText("D-");
                         } else if (gr[i] >= 61.5 && gr[i] <= 65.49) {
                             gpaC[i] = 1.15;
+                            GrL[i].setText("D");
                         } else if (gr[i] >= 65.5 && gr[i] <= 69.49) {
                             gpaC[i] = 1.338;
+                            GrL[i].setText("D+");
                         } else if (gr[i] >= 69.5 && gr[i] <= 71.49) {
                             gpaC[i] = 1.995;
+                            GrL[i].setText("C-");
                         } else if (gr[i] >= 71.5 && gr[i] <= 75.49) {
                             gpaC[i] = 2.3;
+                            GrL[i].setText("C");
                         } else if (gr[i] >= 75.5 && gr[i] <= 79.49) {
                             gpaC[i] = 2.645;
+                            GrL[i].setText("C+");
                         } else if (gr[i] >= 79.5 && gr[i] <= 81.49) {
                             gpaC[i] = 3.105;
+                            GrL[i].setText("B-");
                         } else if (gr[i] >= 81.5 && gr[i] <= 85.49) {
                             gpaC[i] = 3.45;
+                            GrL[i].setText("B");
                         } else if (gr[i] >= 85.5 && gr[i] <= 89.49) {
                             gpaC[i] = 3.795;
+                            GrL[i].setText("B+");
                         } else if (gr[i] >= 89.5 && gr[i] <= 91.49) {
                             gpaC[i] = 4.255;
+                            GrL[i].setText("A-");
                         } else if (gr[i] >= 91.5 && gr[i] <= 97.49) {
                             gpaC[i] = 4.6;
+                            GrL[i].setText("A");
                         } else if (gr[i] >= 97.5) {
                             gpaC[i] = 4.945;
+                            GrL[i].setText("A+");
                         }
                         break;
                     case "Advanced Placement ▽":
                         if (gr[i] <= 59.49) {
                             gpaC[i] = 0.0;
+                            GrL[i].setText("F");
                         } else if (gr[i] >= 59.5 && gr[i] <= 61.45) {
                             gpaC[i] = 0.875;
+                            GrL[i].setText("D-");
                         } else if (gr[i] >= 61.5 && gr[i] <= 65.49) {
                             gpaC[i] = 1.25;
+                            GrL[i].setText("D");
                         } else if (gr[i] >= 65.5 && gr[i] <= 69.49) {
                             gpaC[i] = 1.625;
+                            GrL[i].setText("D+");
                         } else if (gr[i] >= 69.5 && gr[i] <= 71.49) {
                             gpaC[i] = 2.125;
+                            GrL[i].setText("C-");
                         } else if (gr[i] >= 71.5 && gr[i] <= 75.49) {
                             gpaC[i] = 2.5;
+                            GrL[i].setText("C");
                         } else if (gr[i] >= 75.5 && gr[i] <= 79.49) {
                             gpaC[i] = 2.875;
+                            GrL[i].setText("C+");
                         } else if (gr[i] >= 79.5 && gr[i] <= 81.49) {
                             gpaC[i] = 3.375;
+                            GrL[i].setText("B-");
                         } else if (gr[i] >= 81.5 && gr[i] <= 85.49) {
                             gpaC[i] = 3.75;
+                            GrL[i].setText("B");
                         } else if (gr[i] >= 85.5 && gr[i] <= 89.49) {
                             gpaC[i] = 4.125;
+                            GrL[i].setText("B+");
                         } else if (gr[i] >= 89.5 && gr[i] <= 91.49) {
                             gpaC[i] = 4.625;
+                            GrL[i].setText("A-");
                         } else if (gr[i] >= 91.5 && gr[i] <= 97.49) {
                             gpaC[i] = 5;
+                            GrL[i].setText("A");
                         } else if (gr[i] >= 97.5) {
                             gpaC[i] = 5.375;
+                            GrL[i].setText("A+");
                         }
                         break;
                 }
             }
+
+            totalcredits = c1 + c2 + c3 + c4 + c5 + c6 + c7 + c8 + pcredits;
+            for (int i = 0; i < 8; i++) {
+                gpoints += cr[i] * gpaC[i];
+            }
+            gpoints += pcredits * gpa;
+            gpa = gpoints / totalcredits;
+
+            for (int i = 0; i < 9; i++) {
+                classNum[i].setVisible(false);
+                if (i < 8) {
+                    levelB[i].setVisible(true);
+                }
+            }
+            PrGPA.setText(String.valueOf(pgpa));
+            gPA.setText(String.valueOf(gpa));
+            TCred.setText(String.valueOf(totalcredits));
+
+            if (gPA.getText() == "NaN") {
+                gPA.setText("0.0");
+            }
+
+            panel1.setVisible(false);
+            classpanel.setVisible(false);
             panel2.setVisible(true);
+            panel3.setVisible(true);
             back.setVisible(true);
+            calc.setVisible(false);
+        } else if (e.getSource() == back) {
+            l1.setVisible(false);
+            l2.setVisible(false);
+            l3.setVisible(false);
+            l4.setVisible(false);
+            l5.setVisible(false);
+            l6.setVisible(false);
+            l7.setVisible(false);
+            l8.setVisible(false);
+            panel2.setVisible(false);
+            panel3.setVisible(false);
+            back.setVisible(false);
+            calc.setVisible(true);
+            for (int i = 0; i < 9; i++) {
+                if (i < 8) {
+                    levelB[i].setVisible(true);
+                }
+                classNum[i].setVisible(true);
+            }
+            classpanel.setVisible(true);
+            panel1.setVisible(true);
         }
         for (int i = 0; i < 8; i++) {
             if (e.getSource() == levelB[i]) {
-                levelB[i].setVisible(true);
                 l1.setVisible(false);
                 l2.setVisible(false);
                 l3.setVisible(false);
@@ -415,18 +527,6 @@ public class Calc extends JFrame implements ActionListener {
                         l8.setVisible(true);
                         break;
                 }
-            } else if (e.getSource() == back) {
-                levelB[i].setVisible(true);
-                l1.setVisible(false);
-                l2.setVisible(false);
-                l3.setVisible(false);
-                l4.setVisible(false);
-                l5.setVisible(false);
-                l6.setVisible(false);
-                l7.setVisible(false);
-                l8.setVisible(false);
-                panel2.setVisible(false);
-                back.setVisible(false);
             }
         }
     }
