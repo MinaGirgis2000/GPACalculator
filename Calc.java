@@ -6,7 +6,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.*;
 
-public class GPACalculator extends JFrame implements ActionListener {
+public class Calc extends JFrame implements ActionListener {
 
     JPanel panel1, classpanel, panel2, panel3;
     double c1, c2, c3, c4, c5, c6, c7, c8, g1, g2, g3, g4, g5, g6, g7, g8, gpa, pgpa, pcredits, totalcredits, gpoints;
