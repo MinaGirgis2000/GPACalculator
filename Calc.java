@@ -36,7 +36,7 @@ public class Calc extends JFrame implements ActionListener {
     Border border = BorderFactory.createLineBorder(Color.GRAY);
     Font font = new Font(Font.SERIF, Font.BOLD, 13);
 
-    GPACalculator() {
+    Calc() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(560, 565);
         this.setLayout(null);
@@ -329,7 +329,7 @@ public class Calc extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new GPACalculator();
+        new Calc();
     }
 
     @Override
