@@ -1,11 +1,12 @@
 import javax.swing.*;
+import javax.swing.border.Border;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import java.awt.*;
 import java.awt.event.*;
 
-public class Calc extends JFrame implements ActionListener {
+public class GPACalculator extends JFrame implements ActionListener {
 
     JPanel panel1, classpanel, panel2, panel3;
     double c1, c2, c3, c4, c5, c6, c7, c8, g1, g2, g3, g4, g5, g6, g7, g8, gpa, pgpa, pcredits, totalcredits, gpoints;
@@ -32,7 +33,10 @@ public class Calc extends JFrame implements ActionListener {
     JButton[] levelB = new JButton[8];
     JButton calc, back;
 
-    Calc() {
+    Border border = BorderFactory.createLineBorder(Color.GRAY);
+    Font font = new Font(Font.SERIF, Font.BOLD, 13);
+
+    GPACalculator() {
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setSize(560, 565);
         this.setLayout(null);
@@ -61,18 +65,36 @@ public class Calc extends JFrame implements ActionListener {
         blank2 = new JLabel("");
         blank3 = new JLabel("");
         grad = new JLabel("              Grades");
+        grad.setForeground(Color.DARK_GRAY);
+        grad.setFont(font);
         cred = new JLabel("             Credits");
+        cred.setForeground(Color.DARK_GRAY);
+        cred.setFont(font);
         courseL = new JLabel("        Course Level");
+        courseL.setForeground(Color.DARK_GRAY);
+        courseL.setFont(font);
         pregpa = new JLabel(" Pre-GPA");
+        pregpa.setForeground(Color.DARK_GRAY);
+        pregpa.setFont(font);
         precred = new JLabel("Pre-Credits");
+        precred.setForeground(Color.DARK_GRAY);
+        precred.setFont(font);
         tpgpa = new JLabel("Pre-GPA: ");
+        tpgpa.setForeground(Color.DARK_GRAY);
         tgpa = new JLabel("GPA: ");
+        tgpa.setForeground(Color.DARK_GRAY);
         tc = new JLabel("Total Credits: ");
+        tc.setForeground(Color.DARK_GRAY);
         PrGPA = new JLabel();
+        PrGPA.setForeground(Color.DARK_GRAY);
         gPA = new JLabel();
+        gPA.setForeground(Color.DARK_GRAY);
         TCred = new JLabel();
+        TCred.setForeground(Color.DARK_GRAY);
 
         l1.setBounds(406, 79, 128, 75);
+        l1.setBackground(Color.GRAY);
+        l1.setForeground(Color.DARK_GRAY);
         l1.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -82,6 +104,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l2.setBounds(406, 119, 128, 75);
+        l2.setBackground(Color.WHITE);
+        l2.setForeground(Color.DARK_GRAY);
         l2.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -91,6 +115,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l3.setBounds(406, 159, 128, 75);
+        l3.setBackground(Color.WHITE);
+        l3.setForeground(Color.DARK_GRAY);
         l3.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -100,6 +126,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l4.setBounds(406, 199, 128, 75);
+        l4.setBackground(Color.WHITE);
+        l4.setForeground(Color.DARK_GRAY);
         l4.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -109,6 +137,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l5.setBounds(406, 239, 128, 75);
+        l5.setBackground(Color.WHITE);
+        l5.setForeground(Color.DARK_GRAY);
         l5.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -118,6 +148,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l6.setBounds(406, 279, 128, 75);
+        l6.setBackground(Color.WHITE);
+        l6.setForeground(Color.DARK_GRAY);
         l6.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -127,6 +159,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l7.setBounds(406, 319, 128, 75);
+        l7.setBackground(Color.WHITE);
+        l7.setForeground(Color.DARK_GRAY);
         l7.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -136,6 +170,8 @@ public class Calc extends JFrame implements ActionListener {
             }
         });
         l8.setBounds(406, 359, 128, 75);
+        l8.setBackground(Color.WHITE);
+        l8.setForeground(Color.DARK_GRAY);
         l8.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             @Override
             public void valueChanged(ListSelectionEvent e) {
@@ -170,7 +206,7 @@ public class Calc extends JFrame implements ActionListener {
         panel3.setLayout(new GridLayout(8, 2, 18, 10));
 
         classpanel = new JPanel();
-        classpanel.setBounds(10, 5, 80, 440);
+        classpanel.setBounds(10, 5, 100, 440);
         classpanel.setBackground(Color.WHITE);
         classpanel.setLayout(new GridLayout(11, 1, 20, 0));
         classpanel.add(blank1);
@@ -184,10 +220,18 @@ public class Calc extends JFrame implements ActionListener {
             if (i < 8) {
                 levelB[i] = new JButton();
                 levelB[i].setText("Course Level ▽");
+                levelB[i].setBackground(Color.LIGHT_GRAY);
+                levelB[i].setForeground(Color.DARK_GRAY);
+                levelB[i].setFont(font);
+                levelB[i].setBorder(border);
                 levelB[i].setFocusable(false);
                 levelB[i].addActionListener(this);
             }
             credits[i] = new JTextField();
+            credits[i].setBackground(Color.LIGHT_GRAY);
+            credits[i].setForeground(Color.WHITE);
+            credits[i].setFont(font);
+            credits[i].setBorder(border);
             credits[i].addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
                     char c = e.getKeyChar();
@@ -197,6 +241,10 @@ public class Calc extends JFrame implements ActionListener {
                 }
             });
             grades[i] = new JTextField();
+            grades[i].setBackground(Color.LIGHT_GRAY);
+            grades[i].setForeground(Color.WHITE);
+            grades[i].setFont(font);
+            grades[i].setBorder(border);
             grades[i].addKeyListener(new KeyAdapter() {
                 public void keyTyped(KeyEvent e) {
                     char c = e.getKeyChar();
@@ -207,10 +255,19 @@ public class Calc extends JFrame implements ActionListener {
             });
             classNum[i] = new JLabel("Class " + String.valueOf(++i));
             --i;
+            classNum[i].setBackground(Color.WHITE);
+            classNum[i].setForeground(Color.DARK_GRAY);
+            classNum[i].setFont(font);
             if (i < 8) {
                 classG[i] = new JLabel("Class " + String.valueOf(++i));
                 --i;
+                classG[i].setBackground(Color.WHITE);
+                classG[i].setForeground(Color.DARK_GRAY);
+                classG[i].setFont(font);
                 GrL[i] = new JLabel();
+                GrL[i].setBackground(Color.WHITE);
+                GrL[i].setForeground(Color.DARK_GRAY);
+                GrL[i].setFont(font);
                 panel3.add(classG[i]);
                 panel3.add(GrL[i]);
             }
@@ -231,11 +288,15 @@ public class Calc extends JFrame implements ActionListener {
 
         calc = new JButton("Calculate");
         calc.setBounds(230, 470, 100, 25);
+        calc.setBackground(Color.LIGHT_GRAY);
+        calc.setForeground(Color.DARK_GRAY);
         calc.addActionListener(this);
         calc.setFocusable(false);
 
         back = new JButton("Back");
         back.setBounds(230, 470, 100, 25);
+        back.setBackground(Color.LIGHT_GRAY);
+        back.setForeground(Color.DARK_GRAY);
         back.addActionListener(this);
         back.setFocusable(false);
 
@@ -268,7 +329,7 @@ public class Calc extends JFrame implements ActionListener {
     }
 
     public static void main(String[] args) {
-        new Calc();
+        new GPACalculator();
     }
 
     @Override
@@ -458,7 +519,7 @@ public class Calc extends JFrame implements ActionListener {
             gPA.setText(String.valueOf(gpa));
             TCred.setText(String.valueOf(totalcredits));
 
-            if (gPA.getText() == "NaN") {
+            if (gPA.getText().equals("NaN")) {
                 gPA.setText("0.0");
             }
 
@@ -484,6 +545,10 @@ public class Calc extends JFrame implements ActionListener {
             for (int i = 0; i < 9; i++) {
                 if (i < 8) {
                     levelB[i].setVisible(true);
+                }
+                if (grades[i].getText().equals("0") && credits[i].getText().equals("0")) {
+                    grades[i].setText("");
+                    credits[i].setText("");
                 }
                 classNum[i].setVisible(true);
             }
